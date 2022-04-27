@@ -281,7 +281,6 @@ function encodeToRot13(str) {
 
     const alphabetUppercase = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
     const alphabetLowercase = alphabetUppercase.map((element) => element.toLowerCase());
-    console.log(alphabetLowercase);
     const arrayOfLetters = str.split('');
     let result = '';
 
@@ -336,7 +335,12 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+
+    if (typeof value === 'string' || value instanceof String) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
