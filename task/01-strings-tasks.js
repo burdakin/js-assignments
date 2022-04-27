@@ -209,7 +209,56 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    throw new Error('Not implemented');
+
+    let firstLine = getFirstLine(width);
+    let lastLine = getLastLine(width);
+    let bodyLine = getBody(width, height);
+    console.log(firstLine + bodyLine + lastLine);
+    return firstLine + bodyLine + lastLine;
+}
+
+function getFirstLine(width) {
+    const upperLeftAngle = '┌';
+    const upperRightAngle = '┐';
+    const horizontalLine = '─';
+    const newLine = '\n';
+
+    let linesBetween = '';
+    for (let i = 0; i < width-2; i++) {
+        linesBetween += horizontalLine;
+    }
+    result = `${upperLeftAngle}${linesBetween}${upperRightAngle}${newLine}`;
+    return result;
+}
+
+function getBody (height, width) {
+    const verticalLine = '│';
+    const newLine = '\n';
+    const space = ' ';
+    let body = '';
+    
+    for (let i = 0; i < height - 2; i++) {
+        let spaces = '';
+        for (let u = 0; u < width - 2; u++) {
+            spaces += space;    
+        }
+        body += verticalLine + spaces + verticalLine + newLine;
+    }
+    return body;
+}
+
+function getLastLine(width) {
+    const lowerLeftAngle = '└';
+    const lowerRightAngle = '┘';
+    const horizontalLine = '─';
+    const newLine = '\n';
+
+    let linesBetween = '';
+    for (let i = 0; i < width-3; i++) {
+        linesBetween += horizontalLine;
+    }
+    result = `${lowerLeftAngle}${linesBetween}${lowerRightAngle}${newLine}`;
+    return result;
 }
 
 
@@ -229,7 +278,48 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+
+    const alphabetUppercase = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+    const alphabetLowercase = alphabetUppercase.map((element) => element.toLowerCase());
+    console.log(alphabetLowercase);
+    const arrayOfLetters = str.split('');
+    let result = '';
+
+    arrayOfLetters.forEach((element) => {
+
+        // Do 2 conditions to get if a letter is uppercase or not
+
+        if (element == element.toUpperCase()) {
+
+            const midIndex = Math.ceil(alphabetUppercase.length/2);
+            const ptOne = alphabetUppercase.slice().splice(0, midIndex);
+            const ptTwo = alphabetUppercase.slice().splice(-midIndex);
+
+            let indexOfLetter = alphabetUppercase.indexOf(element);
+            
+            if (indexOfLetter <=12) {
+                result += ptTwo[indexOfLetter];
+            } else if (indexOfLetter > 12) {
+                result += (ptOne[indexOfLetter-midIndex]);
+            }
+
+        } else if (element == element.toLowerCase()) {
+
+            console.log(element);
+            let indexOfLetter = alphabetLowercase.indexOf(element.toString());
+
+            const midIndex = Math.ceil(alphabetLowercase.length/2);
+            const ptOne = alphabetLowercase.slice().splice(0, midIndex);
+            const ptTwo = alphabetLowercase.slice().splice(-midIndex);
+            
+            if (indexOfLetter <=12) {
+                result += ptTwo[indexOfLetter];
+            } else if (indexOfLetter > 12) {
+                result+=ptOne[indexOfLetter-midIndex];
+            }
+        }
+    })
+    return result;
 }
 
 /**
